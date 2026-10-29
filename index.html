@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مطعم الذواقة - Gourmand Restaurant</title>
+    
+    <!-- الخطوط والأيقونات -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #e63946;
+            --primary-dark: #c1121f;
+            --secondary: #ffb703;
+            --dark: #1a1a1a;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --border-radius: 12px;
+            --box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #fdfbf7;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* الهيدر وشريط التنقل */
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--dark);
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+            box-shadow: 0 4px 10px rgba(230, 57, 70, 0.3);
+        }
+
+        .logo-text h1 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--dark);
+            line-height: 1.1;
+        }
+
+        .logo-text span {
+            font-size: 0.8rem;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* القسم الرئيسي (الهيرو) */
+        .hero {
+            padding: 160px 20px 100px;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(230, 57, 70, 0.4);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* قائمة الطعام */
+        .section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: var(--dark);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 50%;
+            transform: translateX(50%);
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary);
+            border-radius: 2px;
+        }
+
+        .menu-categories {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 8px 20px;
+            border: 2px solid #eee;
+            background: white;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .category-btn.active, .category-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .menu-item {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .menu-item-img {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .menu-item-info {
+            padding: 20px;
+        }
+
+        .menu-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .menu-item-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .menu-item-price {
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 1.1rem;
+        }
+
+        .menu-item-desc {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        /* معرض الصور */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            height: 250px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.08);
+        }
+
+        /* قسم التواصل الاجتماعي */
+        .social-section {
+            background-color: white;
+            padding: 60px 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .social-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .social-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 25px 15px;
+            border-radius: var(--border-radius);
+            background: #fdfbf7;
+            text-decoration: none;
+            color: var(--dark);
+            transition: var(--transition);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+        }
+
+        .social-card i {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            transition: var(--transition);
+        }
+
+        .social-card.whatsapp:hover { background: #25D366; color: white; }
+        .social-card.facebook:hover { background: #1877F2; color: white; }
+        .social-card.instagram:hover { background: #E4405F; color: white; }
+        .social-card.tiktok:hover { background: #000000; color: white; }
+
+        .social-card:hover i {
+            transform: scale(1.2);
+            color: white !important;
+        }
+
+        /* زر الواتساب العائم */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: #25d366;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+            z-index: 999;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+        }
+
+        /* الفوتر */
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 0.9rem;
+        }
+
+        /* التجاوب مع الموبايل */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .hero h2 {
+                font-size: 2.2rem;
+            }
+            .whatsapp-float {
+                bottom: 20px;
+                left: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- الشريط العلوي واللوجو -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">
+                    <i class="fa-solid =>-utensils"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>مطعم الذواقة</h1>
+                    <span>طعم يتحدث عن نفسه</span>
+                </div>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#home">الرئيسية</a></li>
+                <li><a href="#menu">المنيو</a></li>
+                <li><a href="#gallery">الأطباق</a></li>
+                <li><a href="#contact">تواصل معنا</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- الواجهة الرئيسية -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h2>أشهى المأكولات وأجود المكونات</h2>
+            <p>نقدم لك تجربة طعام فريدة تجمع بين النكهات الأصيلة واللمسات العصريّة</p>
+            <a href="#menu" class="btn btn-primary">استكشف المنيو</a>
+        </div>
+    </section>
+
+    <!-- قائمة الطعام (المنيو) -->
+    <section id="menu" class="section">
+        <div class="section-title">
+            <h2>قائمة الطعام</h2>
+        </div>
+
+        <div class="menu-categories">
+            <button class="category-btn active" onclick="filterMenu('all')">الكل</button>
+            <button class="category-btn" onclick="filterMenu('main')">وجبات رئيسية</button>
+            <button class="category-btn" onclick="filterMenu('burgers')">برجر</button>
+            <button class="category-btn" onclick="filterMenu('drinks')">مشروبات</button>
+        </div>
+
+        <div class="menu-grid">
+            <!-- وجبة 1 -->
+            <div class="menu-item" data-category="burgers">
+                <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80" class="menu-item-img" alt="برجر">
+                <div class="menu-item-info">
+                    <div class="menu-item-header">
+                        <span class="menu-item-title">برجر بالجبنة والبيكون</span>
+                        <span class="menu-item-price">45 ر.س</span>
+                    </div>
+                    <p class="menu-item-desc">لحم بقر طازج مع جبن الشيدر المقرمش والصوص الخاص.</p>
+                </div>
+            </div>
+
+            <!-- وجبة 2 -->
+            <div class="menu-item" data-category="main">
+                <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80" class="menu-item-img" alt="مشويات">
+                <div class="menu-item-info">
+                    <div class="menu-item-header">
+                        <span class="menu-item-title">ستيك مشوي فائق الجودة</span>
+                        <span class="menu-item-price">85 ر.س</span>
+                    </div>
+                    <p class="menu-item-desc">قطعة ستيك مشوية على الفحم مع خضار و أرز بالبهارات.</p>
+                </div>
+            </div>
+
+            <!-- وجبة 3 -->
+            <div class="menu-item" data-category="main">
+                <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80" class="menu-item-img" alt="بيتزا">
+                <div class="menu-item-info">
+                    <div class="menu-item-header">
+                        <span class="menu-item-title">بيتزا نابولي الخاصة</span>
+                        <span class="menu-item-price">50 ر.س</span>
+                    </div>
+                    <p class="menu-item-desc">صلصة طماطم طازجة، جبنة موزاريللا، وأوراق الريحان.</p>
+                </div>
+            </div>
+
+            <!-- وجبة 4 -->
+            <div class="menu-item" data-category="drinks">
+                <img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=600&q=80" class="menu-item-img" alt="عصير">
+                <div class="menu-item-info">
+                    <div class="menu-item-header">
+                        <span class="menu-item-title">مشروب ليمون بالنعناع</span>
+                        <span class="menu-item-price">18 ر.س</span>
+                    </div>
+                    <p class="menu-item-desc">عصير طبيعي منعش مع قطع الثلج والنعناع الطازج.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- معرض الصور -->
+    <section id="gallery" class="section">
+        <div class="section-title">
+            <h2>معرض الصور</h2>
+        </div>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80" alt="أجواء المطعم">
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80" alt="طبق مميز">
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80" alt="حلويات">
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=600&q=80" alt="جلسة خارجية">
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم وسائل التواصل الاجتماعي -->
+    <section id="contact" class="social-section">
+        <div class="section-title">
+            <h2>تواصل معنا عبر منصاتنا</h2>
+        </div>
+        <div class="social-cards">
+            <!-- رابط الواتساب -->
+            <a href="https://wa.me/201080119834" target="_blank" class="social-card whatsapp">
+                <i class="fab fa-whatsapp" style="color: #25D366;"></i>
+                <h3>واتساب</h3>
+                <span>طلب مباشر / استفسار</span>
+            </a>
+
+            <!-- رابط الفيسبوك -->
+            <a href="https://facebook.com" target="_blank" class="social-card facebook">
+                <i class="fab fa-facebook-f" style="color: #1877F2;"></i>
+                <h3>فيسبوك</h3>
+                <span>تابع عروضنا اليومية</span>
+            </a>
+
+            <!-- رابط انستغرام -->
+            <a href="https://instagram.com" target="_blank" class="social-card instagram">
+                <i class="fab fa-instagram" style="color: #E4405F;"></i>
+                <h3>انستغرام</h3>
+                <span>شاهد صور أطباقنا</span>
+            </a>
+
+            <!-- رابط تيك توك -->
+            <a href="https://tiktok.com" target="_blank" class="social-card tiktok">
+                <i class="fab fa-tiktok" style="color: #000000;"></i>
+                <h3>تيك توك</h3>
+                <span>فيديوهات من الكواليس</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- زر الواتساب العائم -->
+    <a href="https://wa.me/201080119834" class="whatsapp-float" target="_blank" title="تواصل معنا عبر الواتساب">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- الفوتر -->
+    <footer>
+        <p>جميع الحقوق محفوظة &copy; 2026 - مطعم الذواقة</p>
+    </footer>
+
+    <!-- سكربت تصفية المنيو -->
+    <script>
+        function filterMenu(category) {
+            const items = document.querySelectorAll('.menu-item');
+            const buttons = document.querySelectorAll('.category-btn');
+
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            items.forEach(item => {
+                if (category === 'all' || item.getAttribute('data-category') === category) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
